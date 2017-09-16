@@ -1,4 +1,9 @@
 require("./instantHello");
 
 var goodbye = require("./talk/goodbye");
-goodbye()
+var talk = require("./talk");
+
+talk.intro();
+
+
+goodbye();
