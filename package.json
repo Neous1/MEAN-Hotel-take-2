@@ -1,0 +1,29 @@
+{
+  "name": "meanhotel2",
+  "version": "1.0.0",
+  "description": "mean stack",
+  "main": "app.js",
+  "scripts": {
+    "start":"node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Neous1/MEAN-Hotel-take-2.git"
+  },
+  "keywords": [
+    "mean"
+  ],
+  "author": "Yvon N",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Neous1/MEAN-Hotel-take-2/issues"
+  },
+  "homepage": "https://github.com/Neous1/MEAN-Hotel-take-2#readme",
+  "dependencies": {
+    "express": "^4.15.4"
+  },
+  "devDependencies": {
+    "mocha": "^3.5.3"
+  }
+}
