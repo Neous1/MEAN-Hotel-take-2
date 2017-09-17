@@ -5,7 +5,15 @@ app.set("port", 3000);
 
 app.get("/", function(req, res){
     console.log("Get the homepage");
-    res.send("Response sent to sever")
+    res
+    .status(404)
+    .send("Response sent to sever")
+});
+app.get("/json", function(req, res){
+    console.log("Get the json");
+    res
+    .status(202)
+    .json({"jsonData": true});
 });
 
 var server = app.listen(app.get("port"), function(){
