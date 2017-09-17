@@ -1,5 +1,7 @@
 var express = require("express");
 var app = express();
 
-app.listen(3000);
-console.log("Here we go...");
+app.set("port", 3000);
+
+app.listen(app.get("port"));
+console.log("Live on port "+app.get("port"));
