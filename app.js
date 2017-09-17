@@ -3,5 +3,8 @@ var app = express();
 
 app.set("port", 3000);
 
-app.listen(app.get("port"));
-console.log("Live on port "+app.get("port"));
+app.listen(app.get("port"), function(){
+  console.log("Live on port "+app.get("port"));
+});
+
+console.log("Me first");
