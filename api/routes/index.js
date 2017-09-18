@@ -8,4 +8,9 @@ router
     .route("/hotels")
     .get(ctrHotels.hotelsGetAll);
 
+//create a route to get 1 hotel
+router
+    .route("/hotels/:hotelId")
+    .get(ctrHotels.hotelsGetOne);
+
 module.exports = router;
