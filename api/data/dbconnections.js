@@ -6,7 +6,9 @@ var dburl = "mongodb://localhost:27017/meanhotel";
 var _connection = null;
 
 var open = function(){
-// set _connection
+    MongoClient.connect(dburl, function(){
+
+    });
 };
 
 var get = function(){
