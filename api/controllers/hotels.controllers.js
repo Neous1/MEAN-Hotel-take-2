@@ -7,28 +7,35 @@ module.exports.hotelsGetAll = function (req, res) {
 
     var db = dbconn.get();
     var collection = db.collection("hotels");
+    collection
+        .find()
+        .toArray(function (err, docs) {
+            console.log("Fond hotels", docs);
+            res
+                .status(200)
+                .json(docs)
+        });
 
-    var docs = collection.find();
-    
-    console.log("db", db);
 
-    console.log("GET the hotels")
-    console.log(req.query);
+    // console.log("db", db);
 
-    var offset = 0;
-    var count = 5;
+    // console.log("GET the hotels")
+    // console.log(req.query);
 
-    if (req.query && req.query.offset) {
-        offset = parseInt(req.query.offset, 10);
-    }
-    if (req.query && req.query.count) {
-        count = parseInt(req.query.count, 10);
-    }
-    //slice is used to determine the starting and ending point of amount of data being displayed/served
-    var returnData = hotelData.slice(offset, offset + count)
-    res
-        .status(200)
-        .json(returnData);
+    // var offset = 0;
+    // var count = 5;
+
+    // if (req.query && req.query.offset) {
+    //     offset = parseInt(req.query.offset, 10);
+    // }
+    // if (req.query && req.query.count) {
+    //     count = parseInt(req.query.count, 10);
+    // }
+    // //slice is used to determine the starting and ending point of amount of data being displayed/served
+    // var returnData = hotelData.slice(offset, offset + count)
+    // res
+    //     .status(200)
+    //     .json(returnData);
 };
 
 module.exports.hotelsGetOne = function (req, res) {
