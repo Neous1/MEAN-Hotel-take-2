@@ -59,10 +59,13 @@ module.exports.hotelsAddOne = function (req, res) {
     if(req.body && req.body.name && req.body.stars){
         newHotel = req.body;
         newHotel.stars = parseInt(req.body.stars, 10);
-    console.log(newHotel) //this is where body-parser will pull the data retrieve
-    res
-        .status(200)
-        .json(newHotel);  
+     
+    collection.insertOne(newHotel, function(err, response){
+        console.log(newHotel)
+        res
+        .status(201)
+        .json(response);  
+    })
     }else{
         console.log("Data missing from body");
         res
