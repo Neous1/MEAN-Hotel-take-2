@@ -49,9 +49,24 @@ module.exports.hotelsGetOne = function (req, res) {
 };
 
 module.exports.hotelsAddOne = function (req, res) {
+
+    var db = dbconn.get();
+    var collection = db.collection("hotels");
+    var newHotel;
+
     console.log("POST new hotel");
-    console.log(req.body) //this is where body-parser will pull the data retrieve
+
+    if(req.body && req.body.name && req.body.stars){
+        newHotel = req.body;
+        newHotel.stars = parseInt(req.body.stars, 10);
+    console.log(newHotel) //this is where body-parser will pull the data retrieve
     res
         .status(200)
-        .json(req.body)
+        .json(newHotel);  
+    }else{
+        console.log("Data missing from body");
+        res
+            .status(400)
+            .json({message : "Required data missing from body"});
+    }
 }
