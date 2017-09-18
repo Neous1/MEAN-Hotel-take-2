@@ -61,10 +61,11 @@ module.exports.hotelsAddOne = function (req, res) {
         newHotel.stars = parseInt(req.body.stars, 10);
      
     collection.insertOne(newHotel, function(err, response){
-        console.log(newHotel)
+        console.log(response);
+        console.log(response.ops);
         res
         .status(201)
-        .json(response);  
+        .json(response.ops);  
     })
     }else{
         console.log("Data missing from body");
