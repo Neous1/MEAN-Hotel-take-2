@@ -28,3 +28,11 @@ module.exports.hotelsGetOne = function(req, res){
         .status(200)
         .json(thisHotel);
 };
+
+module.exports.hotelsAddOne=function(req, res){
+    console.log("POST new hotel");
+    console.log(req.body)//this is where body-parser will pull the data retrieve
+    res
+        .status(200)
+        .json(req.body)
+}
