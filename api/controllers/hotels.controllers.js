@@ -1,6 +1,6 @@
 var dbconn = require("../data/dbconnections");
+var ObjectId = require("mongodb").ObjectId; // necessary bc objectid datatype is special to mongo and not supported json.
 
-// a json file need only be required to be available unlike a text file
 var hotelData = require("../data/hotel-data.json");
 
 module.exports.hotelsGetAll = function (req, res) {
@@ -39,7 +39,9 @@ module.exports.hotelsGetOne = function (req, res) {
     var hotelId = req.params.hotelId; //extract the url parameter and save it in a variable. which can be used to get a specific piece of data
     console.log("GET hotelId", hotelId);
     collection
-        .findOne({}, function (err, doc) {
+        .findOne({
+            _id: ObjectId(hotelId)
+        }, function (err, doc) {
             res
                 .status(200)
                 .json(doc);
