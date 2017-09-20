@@ -36,3 +36,7 @@ process.on('SIGINT', function () {
       process.kill(process.pid, 'SIGUSR2');
     });
   });
+
+  // bring in schemas and models
+
+  require("./hotels-models");

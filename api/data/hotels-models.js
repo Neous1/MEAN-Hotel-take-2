@@ -17,3 +17,5 @@ var hotelSchema = new mongoose.Schema({
     photos: [String],
     currency: String
 });
+
+mongoose.model("Hotel", hotelSchema, "hotels");
