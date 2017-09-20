@@ -2,5 +2,10 @@
 var mongoose = require("mongoose");
 
 var hotelSchema = new mongoose.Schema({
-    name: String //name is a path and string is a schema type
+    name: String, //name is a path and string is a schema type
+    stars: Number,
+    services: [String],
+    description: String,
+    photos: [String],
+    currency: String
 })
