@@ -1,12 +1,8 @@
-var dbconn = require("../data/dbconnections");
-var ObjectId = require("mongodb").ObjectId; // necessary bc objectid datatype is special to mongo and not supported json.
-
-var hotelData = require("../data/hotel-data.json");
+var mongoose = require("mongoose");
+var Hotel = mongoose.model("Hotel");
 
 module.exports.hotelsGetAll = function (req, res) {
 
-    var db = dbconn.get();
-    var collection = db.collection("hotels");
 
     var offset = 0;
     var count = 5;
@@ -18,18 +14,16 @@ module.exports.hotelsGetAll = function (req, res) {
         count = parseInt(req.query.count, 10);
     }
 
-    collection
+    //user the Hotel model
+    Hotel
         .find()
         .skip(offset)
         .limit(count)
-        .toArray(function (err, docs) {
-            console.log("Fond hotels", docs);
+        .exec(function (err, hotels) {
+            console.log("Found Hotels", hotels.length);
             res
-                .status(200)
-                .json(docs)
-        });
-
-
+                .json(hotels);
+        })
 };
 
 module.exports.hotelsGetOne = function (req, res) {
@@ -56,21 +50,23 @@ module.exports.hotelsAddOne = function (req, res) {
 
     console.log("POST new hotel");
 
-    if(req.body && req.body.name && req.body.stars){
+    if (req.body && req.body.name && req.body.stars) {
         newHotel = req.body;
         newHotel.stars = parseInt(req.body.stars, 10);
-     
-    collection.insertOne(newHotel, function(err, response){
-        console.log(response);
-        console.log(response.ops);
-        res
-        .status(201)
-        .json(response.ops);  
-    })
-    }else{
+
+        collection.insertOne(newHotel, function (err, response) {
+            console.log(response);
+            console.log(response.ops);
+            res
+                .status(201)
+                .json(response.ops);
+        })
+    } else {
         console.log("Data missing from body");
         res
             .status(400)
-            .json({message : "Required data missing from body"});
+            .json({
+                message: "Required data missing from body"
+            });
     }
 }
