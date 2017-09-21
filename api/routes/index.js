@@ -1,22 +1,32 @@
 var express = require("express");
 var router = express.Router();
 
-var ctrHotels = require("../controllers/hotels.controllers");
+var ctrlHotels = require("../controllers/hotels.controllers");
+var ctrlReviews = require("../controllers/reviews.controllers");
 
 //define the router, the route adn the function you want to run
 router
     .route("/hotels")
-    .get(ctrHotels.hotelsGetAll);
+    .get(ctrlHotels.hotelsGetAll);
 
 //create a route to get 1 hotel
 router
     .route("/hotels/:hotelId")
-    .get(ctrHotels.hotelsGetOne);
-
+    .get(ctrlHotels.hotelsGetOne);
 
 router
     .route("/hotels/new")
-    .post(ctrHotels.hotelsAddOne);
+    .post(ctrlHotels.hotelsAddOne);
+
+//Review routes
+router
+    .route("/hotels/:hotelId/reviews")
+    .get(ctrlReviews.reviewsGetAll);
+
+//create a route to get 1 hotel
+router
+    .route("/hotels/:hotelId/reviews/:reviewId")
+    .get(ctrlReviews.reviewsGetOne);
 
 
 
