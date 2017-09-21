@@ -27,19 +27,17 @@ module.exports.hotelsGetAll = function (req, res) {
 };
 
 module.exports.hotelsGetOne = function (req, res) {
-    var db = dbconn.get();
-    var collection = db.collection("hotels");
+
 
     var hotelId = req.params.hotelId; //extract the url parameter and save it in a variable. which can be used to get a specific piece of data
     console.log("GET hotelId", hotelId);
-    collection
-        .findOne({
-            _id: ObjectId(hotelId)
-        }, function (err, doc) {
+    Hotel
+        .findById(hotelId)
+        .exec(function (err, doc) {
             res
                 .status(200)
                 .json(doc);
-        })
+        });
 };
 
 module.exports.hotelsAddOne = function (req, res) {
