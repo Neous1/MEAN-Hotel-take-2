@@ -26,8 +26,9 @@ module.exports.reviewsGetAll = function(req, res){
     .select("reviews")
     .exec(function (err, hotel) {
         console.log("Returned hotel ", hotel)
+        var review = hotel.reviews.id(reviewId);// that will extract the review we're after via the id() from mongoose
         res
             .status(200)
-            .json(hotel.reviews);//displays the reviews from the whole query
+            .json(review);//displays the reviews 
     });
  };
