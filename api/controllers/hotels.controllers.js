@@ -1,11 +1,45 @@
 var mongoose = require("mongoose");
 var Hotel = mongoose.model("Hotel");
 
+var runGeoQuery = function(req, res){
+    var lng = parseFloat(req.query.lng);
+    var lat = parseFloat(req.query.lat);
+
+    //A geoJSON point
+    var point = {
+        type: "Point",
+        coordinates: [lng, lat]
+    }; 
+
+    var geoOptions = {
+        spherical: true, // the earth is not flat
+        maxDistance : 2000, //liit the distance of hte search , distance from measured in meters 
+        num: 5 // specify the number of records returned
+    };
+    //use geoNear () to query the Hotel model . GeoNear () Returns documents in order of proximity to a specified point, from the nearest to farthest. geoNear requires a geospatial index.
+    Hotel
+        .geoNear(point , geoOptions, function(err, results, stats){
+
+            console.log("Geo resutl" ,results);
+            console.log("Geo stats",  stats);
+            res
+                .status(200)
+                .json(results);
+        });
+        
+        
+};
+
 module.exports.hotelsGetAll = function (req, res) {
 
 
     var offset = 0;
     var count = 5;
+
+    if(req.query && req.query.lat && req.query.lng){
+        runGeoQuery(req, res);
+        return;
+    }
 
     if (req.query && req.query.offset) {
         offset = parseInt(req.query.offset, 10);
