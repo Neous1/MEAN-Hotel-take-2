@@ -35,7 +35,7 @@ module.exports.hotelsGetAll = function (req, res) {
 
     var offset = 0;
     var count = 5;
-    var maxCount = 10;//set maximum records returned
+    var maxCount = 10; //set maximum records returned
 
     if (req.query && req.query.lat && req.query.lng) {
         runGeoQuery(req, res);
@@ -95,9 +95,22 @@ module.exports.hotelsGetOne = function (req, res) {
     Hotel
         .findById(hotelId)
         .exec(function (err, doc) {
-            res
-                .status(200)
-                .json(doc);
+            if (err) {
+                console.log("Error finding hotel")
+                res
+                    .status(500)//Internal Error
+                    .json(err);
+            } else if(!doc){
+                res
+                    .status(404)
+                    .json({
+                        "message":"Hotel ID not found"
+                    });
+            }else {
+                res
+                    .status(200)
+                    .json(doc);
+            }
         });
 };
 
