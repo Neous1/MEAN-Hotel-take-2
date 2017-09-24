@@ -7,16 +7,13 @@ var ctrlReviews = require("../controllers/reviews.controllers");
 //define the router, the route adn the function you want to run
 router
     .route("/hotels")
-    .get(ctrlHotels.hotelsGetAll);
+    .get(ctrlHotels.hotelsGetAll)
+    .post(ctrlHotels.hotelsAddOne);
 
 //create a route to get 1 hotel
 router
     .route("/hotels/:hotelId")
     .get(ctrlHotels.hotelsGetOne);
-
-router
-    .route("/hotels/new")
-    .post(ctrlHotels.hotelsAddOne);
 
 //Review routes
 router
