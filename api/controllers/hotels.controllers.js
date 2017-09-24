@@ -26,8 +26,6 @@ var runGeoQuery = function (req, res) {
                 .status(200)
                 .json(results);
         });
-
-
 };
 
 module.exports.hotelsGetAll = function (req, res) {
@@ -39,6 +37,11 @@ module.exports.hotelsGetAll = function (req, res) {
 
     if (req.query && req.query.lat && req.query.lng) {
         runGeoQuery(req, res);
+//error trapping
+//status 200 ok
+//status 400 bad request
+//status 404 NOt found
+//status 500 internal error
         return;
     }
 
@@ -67,7 +70,7 @@ module.exports.hotelsGetAll = function (req, res) {
                 "message": "Count limit of " + maxCount + " exceeded"
             });
     }
-    //user the Hotel model
+    //use the Hotel model
     Hotel
         .find()
         .skip(offset)
