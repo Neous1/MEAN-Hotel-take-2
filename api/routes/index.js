@@ -18,7 +18,8 @@ router
 //Review routes
 router
     .route("/hotels/:hotelId/reviews")
-    .get(ctrlReviews.reviewsGetAll);
+    .get(ctrlReviews.reviewsGetAll)
+    .post(ctrlReviews.reviewsAddOne);
 
 //create a route to get 1 hotel
 router
