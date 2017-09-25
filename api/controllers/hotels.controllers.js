@@ -37,11 +37,11 @@ module.exports.hotelsGetAll = function (req, res) {
 
     if (req.query && req.query.lat && req.query.lng) {
         runGeoQuery(req, res);
-//error trapping
-//status 200 ok
-//status 400 bad request
-//status 404 NOt found
-//status 500 internal error
+        //error trapping
+        //status 200 ok
+        //status 400 bad request
+        //status 404 NOt found
+        //status 500 internal error
         return;
     }
 
@@ -106,24 +106,24 @@ module.exports.hotelsGetOne = function (req, res) {
                 console.log("103 . Error finding hotel");
                 response.status = 500;
                 response.message = err;
-            } else if(!doc){
+            } else if (!doc) {
                 response.status = 404;
                 response.message = {
-                    "message":"Hotel ID not found"                    
+                    "message": "Hotel ID not found"
                 };
             }
-                res
-                    .status(response.status)
-                    .json(response.message);
+            res
+                .status(response.status)
+                .json(response.message);
         });
 };
 
 //this function is used to split the string into array in the  create()
-var _splitArray = function(input){
+var _splitArray = function (input) {
     var output;
-    if(input && input.length >0){
+    if (input && input.length > 0) {
         output = input.split(";");
-    }else{
+    } else {
         output = [];
     }
     return output;
@@ -139,30 +139,78 @@ module.exports.hotelsAddOne = function (req, res) {
             services: _splitArray(req.body.services),
             photos: _splitArray(req.body.photos),
             currency: req.body.currency,
-            location:{
+            location: {
                 address: req.body.address,
                 coordinates: [
-                    parseFloat(req.body.lng), 
+                    parseFloat(req.body.lng),
                     parseFloat(req.body.lat)
                 ]
             }
- 
-        }, function(err, hotel){
-            if (err){
+
+        }, function (err, hotel) {
+            if (err) {
                 console.log('Error creating hotel');
-                res 
+                res
                     .status(400)
                     .json(err);
-            }else{
+            } else {
                 console.log('Hotel created', hotel);
                 res
                     .status(201)
                     .json(hotel);
-                
             }
         });
+};
 
-
-
-
+module.exports.hotelsUpdateOne = function (req, res) {
+    var hotelId = req.params.hotelId; //extract the url parameter and save it in a variable. which can be used to get a specific piece of data
+    console.log("GET hotelId", hotelId);
+    Hotel
+        .findById(hotelId)
+        .exec(function (err, doc) {
+            var response = {
+                status: 200,
+                message: doc
+            };
+            if (err) {
+                console.log("103 . Error finding hotel");
+                response.status = 500;
+                response.message = err;
+            } else if (!doc) {
+                response.status = 404;
+                response.message = {
+                    "message": "Hotel ID not found"
+                };
+            }
+            if (response.status !== 200) {
+                res
+                    .status(response.status)
+                    .json(response.message);
+            } else {
+                doc.name = req.body.name,
+                    doc.description = req.body.description,
+                    doc.stars = parseInt(req.body.stars, 10),
+                    doc.services = _splitArray(req.body.services),
+                    doc.photos = _splitArray(req.body.photos),
+                    doc.currency = req.body.currency,
+                    doc.location = {
+                        address: req.body.address,
+                        coordinates: [
+                            parseFloat(req.body.lng),
+                            parseFloat(req.body.lat)
+                        ]
+                    };
+                doc.save(function (err, hotelsUpdated) {
+                    if (err) {
+                        res
+                            .status(500)
+                            .json(err);
+                    } else {
+                        res
+                            .status(204)
+                            .json();
+                    }
+                });
+            }
+        });
 };
